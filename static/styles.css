@@ -1,23 +1,16 @@
+:root{
+    --55: #27374D;
+    --30:#526D82;
+    --10:#9DB2BF;
+    --5: #DDE6ED;
+}
 *{
-    box-sizing: border-box;
-    list-style-type: none;
+    padding:0;
+    list-style: none;
     text-decoration: none;
-    padding: 0;
-    margin: 0;
-}
-.article-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-.article-list li {
-    margin-bottom: 20px;
-}
-.article-title {
-    font-size: 20px;
-    font-weight: bold;
-}
-.article-summary {
     font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    box-sizing: border-box;
 }
+
 

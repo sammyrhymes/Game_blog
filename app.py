@@ -36,6 +36,16 @@ def create_article():
 def confirmation():
     return render_template('confirmation.html')
 
+
+@app.route('/article/<id>')
+def view_article(id):
+    conn = sqlite3.connect('blog.db')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM articles where id = ?', id)
+    article = cur.fetchone()
+    cur.close()
+    return render_template('view_article.html',article=article, id=id)
+
 # Home Page - Displaying Articles
 @app.route('/')
 def home():
