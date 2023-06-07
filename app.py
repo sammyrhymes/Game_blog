@@ -1,26 +1,50 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+import sqlite3
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'
 
-# Sample article data
-articles = [
-    {
-        'title': 'Game Review 1',
-        'summary': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    },
-    {
-        'title': 'Game Review 2',
-        'summary': 'Nulla ultricies nulla id risus tristique sollicitudin.',
-    },
-    {
-        'title': 'Game Review 3',
-        'summary': 'Praesent vitae metus vitae est lobortis vulputate.',
-    }
-]
+# Database Initialization
+conn = sqlite3.connect('blog.db')
+cur = conn.cursor()
+cur.execute('CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, author TEXT, date TEXT)')
 
+
+# Route for Creating New Article
+@app.route('/create', methods=['GET', 'POST'])
+def create_article():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        author = request.form['author']
+        date = request.form['date']
+
+        # Insert new article into the database
+        conn = sqlite3.connect('blog.db')
+        cur = conn.cursor()
+        cur.execute('INSERT INTO articles (title, content, author, date) VALUES (?, ?, ?, ?)',
+                    (title, content, author, date))
+        conn.commit()
+        cur.close()
+
+        return redirect(url_for('confirmation'))
+
+    return render_template('create.html')
+
+# Confirmation Page
+@app.route('/confirmation')
+def confirmation():
+    return render_template('confirmation.html')
+
+# Home Page - Displaying Articles
 @app.route('/')
-def index():
-    return render_template('index.html', articles=articles)
+def home():
+    conn = sqlite3.connect('blog.db')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM articles')
+    articles = cur.fetchall()
+    cur.close()
+    return render_template('home.html', articles=articles)
 
 if __name__ == '__main__':
     app.run(debug=True)
