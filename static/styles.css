@@ -1,0 +1,16 @@
+
+.article-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.article-list li {
+    margin-bottom: 20px;
+}
+.article-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+.article-summary {
+    font-size: 16px;
+}

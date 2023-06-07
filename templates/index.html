@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" src="../static/styles.css">
+    <title>Game Blog</title>
+</head>
+<body>
+    <h1>Welcome to the Game Blog!</h1>
+    <h2>Latest Articles:</h2>
+    <ul class="article-list">
+        {% for article in articles %}
+            <li>
+                <h3 class="article-title">{{ article.title }}</h3>
+                <p class="article-summary">{{ article.summary }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
